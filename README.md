@@ -15,7 +15,7 @@ DA-2-43/
 │  └─ exit_codes.py
 ├─ tests/
 │  ├─ test_core.py
-├─ setup.py / pyproject.toml
+├─ pyproject.toml
 ├─ README.md
 ├─ requirements.txt
 ```
@@ -70,10 +70,16 @@ Plots and optional CSV are saved to `--out-dir`.
 git clone <repo_url>
 cd DA-2-43
 python -m venv .venv
+
 # Windows PowerShell
-.venv\Scripts\Activate.ps1
-pip install -e .
-pip install -r requirements.txt  # optional
+.venv\Scripts\activate
+# -- or --
+# Linux bash
+source venv/bin/activate
+
+pip install .
+# -- or --
+pip install .[dev] # for tests
 ```
 
 ---
@@ -85,25 +91,25 @@ pip install -r requirements.txt  # optional
 CSV input:
 
 ```bash
-python -m visualize_categorical.cli --input data/my_data.csv --column color --out-dir figures
+visualize-categorical --input data/my_data.csv --column color --out-dir figures
 ```
 
 Synthetic data:
 
 ```bash
-python -m visualize_categorical.cli --n 100 --column mood --out-dir figures --seed 42
+visualize-categorical --n 100 --column mood --out-dir figures --seed 42
 ```
 
 One-hot encoding:
 
 ```bash
-python -m visualize_categorical.cli --n 50 --column color --out-dir figures-onehot --encoder onehot --export
+visualize-categorical --n 50 --column color --out-dir figures-onehot --encoder onehot --export
 ```
 
 Help:
 
 ```bash
-python -m visualize_categorical.cli --help
+visualize-categorical --help
 ```
 
 ### Python
