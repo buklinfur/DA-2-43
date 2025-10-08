@@ -26,7 +26,6 @@ def parse_args():
                    help="Size of synthetic dataset (if generated)")
     p.add_argument("--seed", type=int, default=42,
                    help="Random seed for generation")
-
     p.add_argument("--encoder", type=str, choices=["none", "onehot", "ordinal", "label"],
                    default="none", help="Encoding method for categorical column")
     p.add_argument("--export", action="store_true",
@@ -45,13 +44,14 @@ def run_cli():
     else:
         df = create_synthetic_data(n=args.n, column_name=args.column, seed=args.seed)
 
-    # Optional encoding
     if args.encoder != "none":
         df = encode_categorical(df, args.column, method=args.encoder)
         print(f"[INFO] Column '{args.column}' encoded using '{args.encoder}'")
 
-    # Count and visualize
-    counts = count_categories(df, args.column if args.encoder == "none" else None)
+    if args.encoder == "onehot":
+        counts = df.sum().loc[df.columns.str.startswith(args.column)]
+    else:
+        counts = count_categories(df, args.column)
 
     bar_path = out_dir / f"bar_{args.column}.png"
     pie_path = out_dir / f"pie_{args.column}.png"
