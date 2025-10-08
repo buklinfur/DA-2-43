@@ -31,7 +31,7 @@ jobs:
 
       - name: Check CLI help
         run: |
-          visualize_categorical --help
+          visualize-categorical --help
 
       - name: Run tests
         run: |
